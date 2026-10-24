@@ -50,6 +50,7 @@ function guardarCliente() {
     };
 
     clientes.push(cliente);
+    pintarClientes();
 }
 
 function pintarClientes() {
@@ -57,16 +58,43 @@ function pintarClientes() {
     tabla.innerHTML = "";
 
     for (let i = 0; i < clientes.length; i++) {
-        let cliente = clientes[i];
+    let cliente = clientes[i];
 
-        tabla.innerHTML += "<tr>";
-        tabla.innerHTML += "<td>" + cliente.cedula + "</td>";
-        tabla.innerHTML += "<td>" + cliente.nombre + "</td>";
-        tabla.innerHTML += "<td>" + cliente.apellido + "</td>";
-        tabla.innerHTML += "<td>" + cliente.ingresos + "</td>";
-        tabla.innerHTML += "<td>" + cliente.egresos + "</td>";
-        tabla.innerHTML += "<td><button onclick=\"seleccionarCliente('" + cliente.cedula + "')\">Actualizar</button></td>";
-        tabla.innerHTML += "</tr>";
+    let fila = "<tr>";
+    fila += "<td>" + cliente.cedula + "</td>";
+    fila += "<td>" + cliente.nombre + "</td>";
+    fila += "<td>" + cliente.apellido + "</td>";
+    fila += "<td>" + cliente.ingresos + "</td>";
+    fila += "<td>" + cliente.egresos + "</td>";
+    fila += "<td><button onclick=\"seleccionarCliente('" + cliente.cedula + "')\">Actualizar</button></td>";
+    fila += "</tr>";
+
+    tabla.innerHTML += fila;
+    }
+    
+}
+
+function buscarCliente(cedula) {
+    for (let i = 0; i < clientes.length; i++) {
+        if (clientes[i].cedula == cedula) {
+            return clientes[i];
+        }
+    }
+
+    return null;
+}
+
+function seleccionarCliente(cedula) {
+    let cliente = buscarCliente(cedula);
+
+    if (cliente != null) {
+        clienteSeleccionado = cliente;
+
+        mostrarTextoEnCaja("cedula", cliente.cedula);
+        mostrarTextoEnCaja("nombre", cliente.nombre);
+        mostrarTextoEnCaja("apellido", cliente.apellido);
+        mostrarTextoEnCaja("ingresos", cliente.ingresos);
+        mostrarTextoEnCaja("egresos", cliente.egresos);
     }
 }
 //Para recuperar o mostrar información usar los métodos de la clase utilitarios, puede agregar métodos adicionales en utilitarios
