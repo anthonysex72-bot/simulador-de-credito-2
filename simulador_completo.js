@@ -99,9 +99,61 @@ function buscarClienteCredito() {
     let cliente = buscarCliente(cedula);
 
     if (cliente != null) {
-        // Aquí mostraremos los datos del cliente en el siguiente paso.
+        clienteSeleccionado = cliente;
+        let datos = `
+            <h3>Datos del Cliente</h3>
+            <p><strong>Cédula:</strong> ${cliente.cedula}</p>
+            <p><strong>Nombre:</strong> ${cliente.nombre}</p>
+            <p><strong>Apellido:</strong> ${cliente.apellido}</p>
+            <p><strong>Ingresos:</strong> ${cliente.ingresos}</p>
+            <p><strong>Egresos:</strong> ${cliente.egresos}</p>
+        `;
+
+        document.getElementById("datosClienteCredito").innerHTML = datos;
     } else {
+      clienteSeleccionado = null;
         mostrarTexto("datosClienteCredito", "Cliente no encontrado");
+    }
+    
+}
+
+function calcularCredito() {
+    if (clienteSeleccionado == null) {
+    mostrarTexto("resultadoCredito", "Primero debes buscar un cliente");
+    return;
+    }     
+    let monto = recuperarFloat("montoCredito");
+    let plazo = recuperarFloat("plazoCredito");
+
+    if (isNaN(monto) || monto <= 0 || isNaN(plazo) || plazo <= 0) {
+    mostrarTexto("resultadoCredito", "Ingresa un monto y un plazo válidos");
+    return;
+}
+
+    let ingresos = clienteSeleccionado.ingresos;
+    let egresos = clienteSeleccionado.egresos;
+
+    let disponible = calcularDisponible(ingresos, egresos);
+    let capacidadPago = calcularCapacidadPago(disponible);
+    let interes = calcularInteresSimple(monto, tasaInteres, plazo);
+    let total = calcularTotalPagar(monto, interes);
+    let cuota = calcularCuotaMensual(total, plazo);
+
+    creditoAprobado = aprobarCredito(capacidadPago, cuota);
+
+    let resultado = `
+        Capacidad de pago: ${capacidadPago.toFixed(2)}<br>
+        Total a pagar: ${total.toFixed(2)}<br>
+        Cuota mensual: ${cuota.toFixed(2)}<br>
+        RESULTADO: ${creditoAprobado ? "APROBADO" : "RECHAZADO"}
+    `;
+
+    document.getElementById("resultadoCredito").innerHTML = resultado;
+
+    if (creditoAprobado) {
+        document.getElementById("resultadoCredito").className = "aprobado";
+    } else {
+        document.getElementById("resultadoCredito").className = "rechazado";
     }
 }
 
