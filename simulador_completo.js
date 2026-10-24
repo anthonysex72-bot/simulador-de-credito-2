@@ -49,8 +49,18 @@ function guardarCliente() {
         egresos: egresos
     };
 
+    if (clienteSeleccionado == null) {
     clientes.push(cliente);
-    pintarClientes();
+    } else {
+    clienteSeleccionado.nombre = nombre;
+    clienteSeleccionado.apellido = apellido;
+    clienteSeleccionado.ingresos = ingresos;
+    clienteSeleccionado.egresos = egresos;
+    clienteSeleccionado = null;
+    
+}
+
+pintarClientes();
 }
 
 function pintarClientes() {
@@ -96,5 +106,15 @@ function seleccionarCliente(cedula) {
         mostrarTextoEnCaja("ingresos", cliente.ingresos);
         mostrarTextoEnCaja("egresos", cliente.egresos);
     }
+}
+
+function limpiar() {
+    mostrarTextoEnCaja("cedula", "");
+    mostrarTextoEnCaja("nombre", "");
+    mostrarTextoEnCaja("apellido", "");
+    mostrarTextoEnCaja("ingresos", "");
+    mostrarTextoEnCaja("egresos", "");
+
+    clienteSeleccionado = null;
 }
 //Para recuperar o mostrar información usar los métodos de la clase utilitarios, puede agregar métodos adicionales en utilitarios
