@@ -13,6 +13,8 @@
 <nav>
   <button onclick="mostrarSeccion('parametros')">Parámetros</button>
   <button onclick="mostrarSeccion('clientes')">Clientes</button>
+  <button onclick="mostrarSeccion('credito')">Créditos</button>
+
 </nav>
 
 <section id="parametros" >
@@ -28,6 +30,8 @@
   <p id="mensajeTasa"></p>
 </section>
 <section id="clientes">
+
+  
 <input type="text" id="cedula" placeholder="Cédula">
 <input type="text" id="nombre" placeholder="Nombre">
 <input type="text" id="apellido" placeholder="Apellido">
@@ -51,6 +55,28 @@
     <tbody id="tablaClientes">
     </tbody>
     </table>
+</section>
+
+<section id="credito">
+  <h2>Solicitar Crédito</h2>
+
+  <input type="text" id="buscarCedulaCredito">
+  <button onclick="buscarClienteCredito()">Buscar cliente</button>
+
+  <div id="datosClienteCredito" class="card"></div>
+
+  <input type="number" id="montoCredito">
+  <input type="number" id="plazoCredito">
+
+  <br>
+
+  <button onclick="calcularCredito()">Calcular crédito</button>
+
+  <div id="resultadoCredito"></div>
+
+  <button id="btnSolicitarCredito" onclick="solicitarCredito()" disabled>
+    Solicitar crédito
+  </button>
 </section>
 
 

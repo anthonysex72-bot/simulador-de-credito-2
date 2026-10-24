@@ -94,6 +94,17 @@ function buscarCliente(cedula) {
     return null;
 }
 
+function buscarClienteCredito() {
+    let cedula = recuperaraTexto("buscarCedulaCredito");
+    let cliente = buscarCliente(cedula);
+
+    if (cliente != null) {
+        // Aquí mostraremos los datos del cliente en el siguiente paso.
+    } else {
+        mostrarTexto("datosClienteCredito", "Cliente no encontrado");
+    }
+}
+
 function seleccionarCliente(cedula) {
     let cliente = buscarCliente(cedula);
 
